@@ -1,5 +1,5 @@
-# asteriods
-A simple asteriod destroying game made with pygame.
+# asteroids
+A simple asteroid destroying game made with pygame.
 
 ## How to Play
 
