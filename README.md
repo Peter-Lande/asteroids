@@ -8,10 +8,10 @@ Space to shoot
 
 ## Installation
 
-'''Bash
+```Bash
 git clone https://github.com/drunicornthe1/asteriods
 pip install -r requirements.txt
-'''
+```
 
 ## Contribution
 
