@@ -83,7 +83,7 @@ class Bullet(Object):
 		self.checkBounds()
 		self.rect.center = self.pos
 
-class Asteriod(Object):
+class Asteroid(Object):
 	def __init__(self, screen, height, width, pos):
 		Object.__init__(self, pos[0], pos[1], screen)
 		self.height = height
@@ -100,7 +100,7 @@ class Asteriod(Object):
 		self.checkBounds()
 		self.rect.center = self.pos
 
-class LargeAsteriod(Asteriod):
+class LargeAsteroid(Asteroid):
 	def __init__(self, screen):
 		while 1:
 			self.pos = pygame.math.Vector2(random.randint(10, screen.get_width() - 10 ), random.randint(10, screen.get_height() - 10))
@@ -108,29 +108,31 @@ class LargeAsteriod(Asteriod):
 				break
 		self.height = 40
 		self.width = 40
-		Asteriod.__init__(self, screen, self.height, self.width, self.pos)
+		Asteroid.__init__(self, screen, self.height, self.width, self.pos)
 	def death(self, group):
 		group.remove(self)
-		group.add(LargeAsteriod(self.screen))
-		group.add(MediumAsteriod(self.screen, self.pos))
-		group.add(MediumAsteriod(self.screen, self.pos))
+		group.add(LargeAsteroid(self.screen))
+		group.add(MediumAsteroid(self.screen, self.pos, -1))
+		group.add(MediumAsteroid(self.screen, self.pos, 1))
 
-class MediumAsteriod(Asteriod):
-	def __init__(self, screen, pos):
+class MediumAsteroid(Asteroid):
+	def __init__(self, screen, pos, mag):
 		self.pos = pos
 		self.height = 20
 		self.width = 20
-		Asteriod.__init__(self, screen, self.height, self.width, self.pos)
+		Asteroid.__init__(self, screen, self.height, self.width, self.pos)
+		self.vel *= mag
 	def death(self, group):
 		group.remove(self)
-		group.add(SmallAsteriod(self.screen, self.pos))
-		group.add(SmallAsteriod(self.screen, self.pos))
+		group.add(SmallAsteroid(self.screen, self.pos, -1))
+		group.add(SmallAsteroid(self.screen, self.pos, 1))
 
-class SmallAsteriod(Asteriod):
-	def __init__(self, screen, pos):
+class SmallAsteroid(Asteroid):
+	def __init__(self, screen, pos, mag):
 		self.pos = pos
 		self.height = 10
 		self.width = 10
-		Asteriod.__init__(self, screen, self.height, self.width, self.pos)
+		Asteroid.__init__(self, screen, self.height, self.width, self.pos)
+		self.vel *= mag
 	def death(self, group):
 		group.remove(self)
